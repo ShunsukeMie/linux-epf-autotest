@@ -1,0 +1,17 @@
+#!/bin/sh
+
+mount -t sysfs none /sys
+mount -t configfs none /sys/kernel/config
+mount -t proc /proc /proc
+mount -t devtmpfs none /dev
+
+mount /dev/nvme0n1p1 /tests
+
+/tests/init.sh
+if [ -e /tests/test.sh ]; then
+  /tests/test.sh
+  echo $? > /tests/result.txt
+fi
+
+poweroff -f
+/bin/sh

@@ -11,7 +11,14 @@ rootfs.img:
 	mkdir -p mnt
 	sudo mount rootfs.img ./mnt
 	sudo cp -r busybox/_install/* mnt
-	sudo umount ./mnt
+	sudo cp init mnt
+	sudo mkdir -p mnt/dev mnt/sys mnt/sys/kernel/config mnt/proc mnt/tests
+	sudo umount -d ./mnt
+	cp rootfs.img rootfs.rc.img
+
+pcitest:
+	make -C linux/tools/pci
+	cp linux/tools/pci/pcitest ./tests/rc
 
 qemu-system-x86_64:
 	cd qemu && ./configure --target-list=x86_64-softmmu
@@ -19,5 +26,16 @@ qemu-system-x86_64:
 	cd qemu && git am < ../patches/0002-hw-misc-Introduce-a-epf-bridge-device.patch
 	make -C qemu -j 32
 
+umount:
+	sudo umount -d ./mnt
+
+.PHONY: linux
+linux:
+	./autopatch.sh \
+		linux \
+		patches/0001-PCI-qemu-Add-QEMU-PCIe-endpoint-controller-driver.patch \
+		"https://lore.kernel.org/linux-pci/ZeBU23Ccvv8WqFx_@fedora/T/#t"
+
 clean:
-	$(RM) rootfs.img mnt
+	sudo $(RM) rootfs.img rootfs.rc.img
+	sudo $(RM) -r mnt results tmp

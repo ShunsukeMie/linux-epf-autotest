@@ -1,2 +1,6 @@
 mnt/
 rootfs.img
+rootfs.rc.img
+tmp/
+result.txt
+results/

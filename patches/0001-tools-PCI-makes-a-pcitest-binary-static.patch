@@ -1,0 +1,25 @@
+From e3812b25ffbc96776ae99e22414bdc10611440ed Mon Sep 17 00:00:00 2001
+From: Shunsuke Mie <mie@igel.co.jp>
+Date: Thu, 7 Mar 2024 15:26:39 +0900
+Subject: [PATCH] tools: PCI: makes a pcitest binary static
+
+---
+ tools/pci/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/pci/Makefile b/tools/pci/Makefile
+index 57744778b518..78333da5fb2b 100644
+--- a/tools/pci/Makefile
++++ b/tools/pci/Makefile
+@@ -12,7 +12,7 @@ endif
+ # (this improves performance and avoids hard-to-debug behaviour);
+ MAKEFLAGS += -r
+ 
+-CFLAGS += -O2 -Wall -g -D_GNU_SOURCE -I$(OUTPUT)include
++CFLAGS += -O2 -Wall -g -D_GNU_SOURCE -I$(OUTPUT)include -static
+ 
+ ALL_TARGETS := pcitest
+ ALL_PROGRAMS := $(patsubst %,$(OUTPUT)%,$(ALL_TARGETS))
+-- 
+2.25.1
+

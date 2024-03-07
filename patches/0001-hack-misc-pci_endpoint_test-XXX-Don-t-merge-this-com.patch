@@ -1,0 +1,27 @@
+From 7795ac1e2bbb17c76e3642abc0b106ec7cd992fd Mon Sep 17 00:00:00 2001
+From: Shunsuke Mie <mie@igel.co.jp>
+Date: Thu, 7 Mar 2024 15:58:37 +0900
+Subject: [PATCH] hack: misc: pci_endpoint_test: XXX: Don't merge this commit
+
+for the qemu epc testing, change irq type of TI epc, MSI into
+LEGACY_IRQ.
+---
+ drivers/misc/pci_endpoint_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+index c38a6083f0a7..be75d0d247ab 100644
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -966,7 +966,7 @@ static void pci_endpoint_test_remove(struct pci_dev *pdev)
+ static const struct pci_endpoint_test_data default_data = {
+ 	.test_reg_bar = BAR_0,
+ 	.alignment = SZ_4K,
+-	.irq_type = IRQ_TYPE_MSI,
++	.irq_type = IRQ_TYPE_INTX,
+ };
+ 
+ static const struct pci_endpoint_test_data am654_data = {
+-- 
+2.25.1
+
